@@ -2,7 +2,7 @@
 
 You start a game by running the script:
 
-python3 minesweeper.py
+'python3 minesweeper.py'
 
 (If you do not edit the parameters in the script, the script will automatically initialize it to a 10x10 board, with 10 bombs)
 
