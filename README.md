@@ -115,6 +115,90 @@ Here's an example of how the game runs:
     9 |    |    |    |    |    |    |    |    |    |    |
     -----------------------------------
     ```
+    
+## How The Code Works:
+
+### Overview
+The code defines a Minesweeper game that can be played in the command line. It includes a `Board` class to represent the game board and a `play` function to manage the game loop. Here’s a detailed breakdown of each part:
+
+### Board Class
+
+**`__init__` Method:**
+
+- Parameters: `dim_size` (dimension of the board), `num_bombs` (number of bombs).
+- Purpose: Initializes the board with the given dimensions and number of bombs. It calls helper methods to create the board and assign values.
+- Key Variables:
+    - `self.dim_size`: Size of the board (number of rows/columns).
+    - `self.num_bombs`: Number of bombs on the board.
+    - `self.board`: 2D list representing the game board.
+    - `self.dug`: Set to keep track of the locations that have been dug.
+
+**`make_new_board` Method:**
+
+- Purpose: Creates a new game board with the specified number of bombs placed randomly.
+- Process:
+    - Initializes a 2D list filled with `None` to represent the board.
+    - Randomly places bombs (`'*'`) on the board until the specified number is reached.
+
+**`assign_values_to_board` Method:**
+
+- Purpose: Assigns a number to each non-bomb cell representing how many bombs are adjacent to it.
+- Process:
+    - Iterates through each cell on the board.
+    - For each non-bomb cell, calculates the number of neighboring bombs using `get_num_neighboring_bombs`.
+
+**`get_num_neighboring_bombs` Method:**
+
+- Purpose: Counts the number of bombs adjacent to a given cell.
+- Parameters: `row`, `col` (position of the cell).
+- Process:
+    - Checks the surrounding cells (including diagonals).
+    - Ensures it doesn't go out of bounds.
+    - Returns the count of bombs found.
+
+**`dig` Method:**
+
+- Purpose: Digs at a specified location on the board.
+- Parameters: `row`, `col` (position to dig).
+- Process:
+    - Adds the position to the `dug` set.
+    - If the cell contains a bomb (`'*'`), returns `False` indicating the game is over.
+    - If the cell has neighboring bombs, returns `True`.
+    - If the cell has no neighboring bombs, recursively digs adjacent cells.
+
+**`__str__` Method:**
+
+- Purpose: Provides a string representation of the board for display.
+- Process:
+    - Creates a new 2D list representing what the user would see.
+    - Shows dug cells with their values and hides undug cells.
+    - Formats the board as a string with row and column indices for easy reading.
+
+
+**`play` Function:**
+
+- Purpose: Manages the game loop, handling user input and game progression.
+- Process
+    - Initialize Board:
+        - Creates a `Board` object with the specified dimensions and number of bombs.
+    - Game Loop:
+        - Repeats until all non-bomb locations are dug or a bomb is hit.
+        - Displays the current state of the board.
+        - Prompts the user for a location to dig (`row,col`).
+        - Validates the input to ensure it’s within the board's bounds.
+        - Calls the `dig` method on the board.
+        - If a bomb is hit (`dig` returns `False`), the game ends.
+        - If all safe spots are dug, the player wins.
+
+    - End Game:
+        - Displays a victory message if all safe spots are dug.
+        - Displays a game over message if a bomb is hit and reveals the entire board.
+
+## Summary
+
+- The `Board` class manages the game board, including bomb placement and calculating neighboring bomb counts.
+- The `play` function handles user interaction and the main game loop.
+- The game ends either when the player digs up a bomb or when all safe spots are uncovered.
 
 ## Contributing
 
